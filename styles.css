@@ -1,0 +1,19 @@
+
+* {
+    color: black;
+    margin: 0 auto;
+}
+
+header {
+    background-color: maroon;
+    padding: 30px 40px 30px 40px;
+
+}
+
+header *{
+    color: white;
+}
+
+.content {
+
+}
