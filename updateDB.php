@@ -9,21 +9,27 @@ $email = $_POST["user_email"] ?? '';
 $course = $_POST["course"] ?? '';
 $year_level = $_POST["year_level"] ?? '';
 $status = isset($_POST["graduating_status"]) ? 1 : 0;
+$studentID = $_POST["student_number"] ?? ''; 
 
-if (!empty($_FILES["profile_image"]["name"])) {
-    $image = $_FILES["profile_image"]["name"];
-    move_uploaded_files($_FILES["profile_image"]["tmp_name"],"uploads/" , $image);
+if (!empty($_FILES["image"]["name"])) {
+    $image = $_FILES["image"]["name"];
+    move_uploaded_file($_FILES["image"]["tmp_name"],"uploads/" . $image);
 } else {
-    $image = $_POST["existing_image"];
+    $image = $_POST["existing_image"] ?? '';
 }
 
-// Prepare the SQL statement
-$stmt = $conn->prepare("UPDATE student SET student_name=?,student_age=?, student_email=?, student_yearlevel=?, course_id=?, graduating_status=?, image=? WHERE student_code=?");
-$stmt->bind_param("sisiiis",$name, $age, $email, $year_level, $course, $status, $image, $studentID);
+// echo "Image: " . $image . "<br>";
+// echo "Student: " . $studentID . "<br>";
+// echo "Files: ";
+// exit;
 
-// Execute the SQL statement
+// Prepares the SQL statement
+$stmt = $conn->prepare("UPDATE student SET student_name=?,student_age=?, student_email=?, student_yearlevel=?, course_id=?, graduating_status=?, image=? WHERE student_number=?");
+$stmt->bind_param("sisiiiss",$name, $age, $email, $year_level, $course, $status, $image, $studentID);
+
+// Executes the SQL statement
 if ($stmt->execute()) {
-    $_SESSION['success_message'] = "Student '$name' with Student ID: '$student_code' has been successfully added!";
+    $_SESSION['success_message'] = "Student $name with student no.: $studentID has been updated successfully!";
     header("Location: index.php");
     exit;
 } else {

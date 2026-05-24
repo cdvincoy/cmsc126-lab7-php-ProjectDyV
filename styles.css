@@ -35,13 +35,23 @@ input[name=graduating_status] {
     color: maroon;
 }
 
-.content {
-
-}
-
 .upload-box {
+    margin-top: 10px;
     border: 1px dashed lightcoral;
     padding: 20px;
+    display: grid;
+    place-items: center;
+}
+
+.upload-icon {
+    height: 40px;
+    align-content: center;
+}
+
+#file-selected  {
+    display: grid;
+    place-items: center;
+    text-align: center;
 }
 
 .modal-overlay {
@@ -57,10 +67,45 @@ input[name=graduating_status] {
 }
 
 .modal-box {
+    width: 50%;
     background-color: white;
     padding: 30px;
     border-radius: 8px;
     text-align: center;
     line-height: 200%;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.modal-box p {
+    display: inline-block;
+    text-align: left;
+}
+
+.registration {
+    width: 100%;
+    background: maroon;
+    color:white;  
+    border: 1px solid maroon; 
+    padding: 10px 20px; 
+}
+
+.search {
+    margin-top: 8px;
+    color:red;  
+    border: 1px solid red; 
+    padding: 10px 20px; 
+}
+
+.update {
+    margin-top: 8px;
+    color:green;  
+    border: 1px solid green; 
+    padding: 10px 20px; 
+}
+
+.delete {
+    margin-top: 8px;
+    color:blue;  
+    border: 1px solid blue; 
+    padding: 10px 20px; 
 }

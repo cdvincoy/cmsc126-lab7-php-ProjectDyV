@@ -1,4 +1,5 @@
-<?php // This file initializes the database.
+<!-- This file initializes the database. -->
+<?php 
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -11,8 +12,12 @@ $sql = "CREATE DATABASE $dbname";
 // Check if database is created
 if($conn->query($sql) === TRUE){
     echo "Database created successfully";
-    $conn->close();
+    // Create the tables and the values of the database
     include 'DBTables.php';
     echo "Tables Created";
+    header("Location: index.php");
+    exit;
+
 }
-// $conn = new mysqli($servername, $username, $password, $dbname);
+$conn->close();
+?>

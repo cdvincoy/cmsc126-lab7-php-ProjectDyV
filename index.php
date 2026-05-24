@@ -10,7 +10,6 @@ session_start();
     <title>Student Registration</title>
 </head>
 
-
 <body>
     <header>
     <br>
@@ -18,6 +17,7 @@ session_start();
         <p>All fields marked * are required.</p>
     </header><br>
     <div class="content">
+        <!-- This the form for the student registration. -->
         <table>
             <form action="addStudent.php" 
                 method="post" 
@@ -41,6 +41,7 @@ session_start();
                 <td><p class="title">ACADEMIC INFORMATION</p></td>
             </tr>
             <tr>
+                <!-- There is a course suggestion function that is to the database. -->
                 <td><label>Course <span class="red">*</span></label>
                 <input type="text" id="course_input" placeholder="e.g. BS Computer Science" autocomplete="off" required>
                 <input type="hidden" name="course" id="course_id">
@@ -56,27 +57,33 @@ session_start();
             </tr>
 
             <tr>
-                <td><p class="title">PROFILE PHOTO</p>
+                <td colspan="2"><p class="title">PROFILE PHOTO</p><br>
                 <label>Profile Image <span class="red">*</span></label>
-                <div class="upload-box" onclick="document.getElementById('profile_image').click()">
-                    <img src="upload-icon.png" alt="Upload Icon" class="upload-icon">
-                    <p><span class="red">Choose a file</span> or drag it here</p>
-                    <p>JPG, PNG, GIF, WEBP are accepted</p>
-                    <p id="file-name"></p>
+                <div class="upload-box" id="upload-box" onclick="triggerUpload()">
+                    <img src="image_icon.png" alt="Upload Icon" class="upload-icon" id="upload-icon">
+                    <div id="upload-placeholder">
+                        <p><span class="red">Choose a file</span> or drag it here</p>
+                        <p>JPG, PNG, GIF, WEBP are accepted</p>
+                    </div>
+                    <div id="file-selected" style="display:none;">
+                        <img id="preview-img" src="" alt="Preview" style="max-height:100px; max-width:100%; border-radius:6px;">
+                        <p id="file-name" style="margin:6px 0 0;"></p>
+                        <button type="button" onclick="removeFile(event)" style="margin-top: 8px; color:red; background: none; border: 1px solid red; border-radius: 4px; padding: 3px 10px; cursor: pointer;">Remove</button>
+                    </div>
                 </div>
-                <input type="file" name="profile_image" id="profile_image" required style="display: none;"
-                onchange="document.getElementById('file-name').textContent=this.files[0].name"></td>
+                <input type="file" name="profile_image" id="profile_image" accept=".jpg,.jpeg,.gif,.webp" style="display: none;"
+                    onchange="handleFileSelect(this)"></td>
             </tr>
 
             <tr>
-                <td><button type="submit">+Submit Registration</button></td>
+                <td colspan="2"><button class="registration" type="submit">+Submit Registration</button></td>
             </tr>
             </form>
         
             <?php if(isset($_SESSION['success_message'])): ?>
             <div id="modal" class="modal-overlay">
                 <div class="modal-box">
-                    <p><?php echo nl2br(htmlspecialchars($_SESSION['success_message'])); ?></p>
+                    <p><?php echo nl2br(htmlspecialchars($_SESSION['success_message'])); ?></p><br>
                     <button class="modal-close" onclick="document.getElementById('modal').style.display='none'">Close</button>
                 </div>
             </div>
@@ -88,16 +95,16 @@ session_start();
             </tr>
 
             <tr>
-                <td> <p class="title">LOOK UP STUDENT BY ID<p></td>
+                <td> <p class="title-1">LOOK UP STUDENT BY ID<p></td>
             </tr>
     
             <tr>
                 <td>
                     <form action="searchStudent.php" method="POST">
                         <input type="text" name="studentID" placeholder="Enter Student ID(e.g.2024-00123)">
-                        <button type="submit" formaction="searchStudent.php">Search</button>
-                        <button type="submit" formaction="updateStudent.php">Update</button>
-                        <button type="submit" formaction="deleteStudent.php">Delete</button>
+                        <button class="search" type="submit" formaction="searchStudent.php">Search</button>
+                        <button class="update" type="submit" formaction="updateStudent.php">Update</button>
+                        <button class="delete" type="submit" formaction="deleteStudent.php">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -112,7 +119,6 @@ session_start();
             if (query.length === 0) {
                 return;
             }
-
             fetch("suggestCourse.php?q=" + query)
                 .then(response => response.text())
                 .then(data => {
@@ -125,6 +131,43 @@ session_start();
             document.getElementById("course_id").value = id;
             document.getElementById("suggestions").innerHTML ="";
         }
+
+        function triggerUpload() {
+            if (!document.getElementById('profile_image').files.length) {
+                document.getElementById('profile_image').click();
+            }
+        }
+
+        function handleFileSelect(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    document.getElementById('preview-img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                document.getElementById('file-name').textContent = file.name;
+                document.getElementById('upload-placeholder').style.display = 'none';
+                document.getElementById('upload-icon').style.display = 'none';
+                document.getElementById('file-selected').style.display = 'block';
+                }
+            }
+        
+            function removeFile(event) {
+                event.stopPropagation();
+
+                const input = document.getElementById('profile_image');
+                input.value = '';
+                
+                document.getElementById('preview-img').src = '';
+                document.getElementById('file-name').textContent = '';
+                document.getElementById('upload-placeholder').style.display = 'block';
+                document.getElementById('upload-icon').style.display = 'block';
+                document.getElementById('file-selected').style.display = 'none';
+                
+            }
 
     </script>
 
