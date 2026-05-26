@@ -11,7 +11,7 @@ $conn->query($sql);
 // Create student 
 $sql = "CREATE TABLE student (
     student_id     INT AUTO_INCREMENT PRIMARY KEY,
-    student_number    VARCHAR(20) UNIQUE, 
+    student_    VARCHAR(20) UNIQUE, 
     student_name   VARCHAR(50) NOT NULL,
     student_age    INT NOT NULL,
     student_email   VARCHAR(40) NOT NULL UNIQUE,

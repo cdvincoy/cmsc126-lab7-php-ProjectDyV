@@ -1,3 +1,4 @@
+<!-- This file searches for the student and its information in the database. -->
 <?php
 session_start();
 include 'DBConnector.php';

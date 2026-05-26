@@ -1,8 +1,9 @@
-<?php // This file adds a business to the database.
-session_start(); // Start the session to store messages
+<!-- This file updates student record. -->
+<?php 
+session_start(); 
 include 'DBConnector.php';
 
-// Get the business owner, name, category, description, contact info, and location from the form
+
 $name = $_POST["name"] ?? ''; 
 $age = $_POST["age"] ?? '';
 $email = $_POST["user_email"] ?? '';

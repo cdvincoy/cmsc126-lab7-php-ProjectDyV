@@ -1,3 +1,4 @@
+<!-- This file is responsible for giving course suggestions when user inputs a course. -->
 <?php
 include 'DBConnector.php';
 

@@ -1,3 +1,4 @@
+<!-- This file deletes student record from the database and deletes image from the uploads folder. -->
 <?php
 session_start();
 include 'DBConnector.php';

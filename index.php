@@ -57,6 +57,7 @@ session_start();
             </tr>
 
             <tr>
+                <!-- This section asks user for a photo and previews the photo, with an option to remove the photo and reupload.  -->
                 <td colspan="2"><p class="title">PROFILE PHOTO</p><br>
                 <label>Profile Image <span class="red">*</span></label>
                 <div class="upload-box" id="upload-box" onclick="triggerUpload()">
@@ -71,7 +72,7 @@ session_start();
                         <button type="button" onclick="removeFile(event)" style="margin-top: 8px; color:red; background: none; border: 1px solid red; border-radius: 4px; padding: 3px 10px; cursor: pointer;">Remove</button>
                     </div>
                 </div>
-                <input type="file" name="profile_image" id="profile_image" accept=".jpg,.jpeg,.gif,.webp" style="display: none;"
+                <input type="file" name="image" id="image" accept=".jpg,.jpeg,.gif,.webp" style="display: none;"
                     onchange="handleFileSelect(this)"></td>
             </tr>
 
@@ -80,6 +81,7 @@ session_start();
             </tr>
             </form>
         
+            <!-- This is the success message which is used across other files to output results after different actions. -->
             <?php if(isset($_SESSION['success_message'])): ?>
             <div id="modal" class="modal-overlay">
                 <div class="modal-box">
@@ -98,6 +100,8 @@ session_start();
                 <td> <p class="title-1">LOOK UP STUDENT BY ID<p></td>
             </tr>
     
+            <!-- The following are the things you can do once student becomes registered.
+            You can search a student record, update a student record, and delete a student record. -->
             <tr>
                 <td>
                     <form action="searchStudent.php" method="POST">
@@ -113,6 +117,7 @@ session_start();
 
     
     <script>
+        // This part of the code gets triggered when a user inputs a course and a suggested course appears.
         document.getElementById("course_input").addEventListener("keyup", function() {
             let query = this.value;
 
@@ -126,18 +131,21 @@ session_start();
             });
         });
 
+        // Once a course is selected, this function gets triggered.
         function selectCourse(id, name){
             document.getElementById("course_input").value = name;
             document.getElementById("course_id").value = id;
             document.getElementById("suggestions").innerHTML ="";
         }
 
+        // This function is for uploading photo. 
         function triggerUpload() {
-            if (!document.getElementById('profile_image').files.length) {
-                document.getElementById('profile_image').click();
+            if (!document.getElementById('image').files.length) {
+                document.getElementById('image').click();
             }
         }
 
+        // This function previews the chosen photo.
         function handleFileSelect(input) {
             if (input.files && input.files[0]) {
                 const file = input.files[0];
@@ -155,10 +163,11 @@ session_start();
                 }
             }
         
+            // This function removes the chosen photo.
             function removeFile(event) {
                 event.stopPropagation();
 
-                const input = document.getElementById('profile_image');
+                const input = document.getElementById('image');
                 input.value = '';
                 
                 document.getElementById('preview-img').src = '';
